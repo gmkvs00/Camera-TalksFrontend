@@ -1,0 +1,60 @@
+/* Whole permissions row aligns with other fields */
+.permissions-row {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  column-gap: 24px;
+  align-items: flex-start;
+}
+
+/* Left label "Permissions" */
+.permissions-main-label {
+  font-weight: 500;
+  padding-top: 6px;
+}
+
+/* Right side container */
+.permissions-main-field {
+  width: 100%;
+}
+
+/* Container for all groups */
+.permissions-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* One row per permission group: name + grid of items */
+.permission-group-row {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  column-gap: 16px;
+  align-items: flex-start;
+}
+
+/* Group name (User, Role, MES, etc.) */
+.permission-group-title {
+  font-weight: 600;
+  padding-top: 4px;
+}
+
+/* Grid of permissions under each group */
+.permission-group-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px 16px;
+}
+
+/* Single checkbox item */
+.permission-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* Optional: make checkboxes a bit nicer */
+.permission-item input[type='checkbox'] {
+  transform: translateY(1px);
+}
