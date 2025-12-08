@@ -612,3 +612,11 @@ body {
   font-size: 0.8rem;
   color: #9ca3af; 
 }
+#nprogress .bar {
+  height: 2px;
+  background: var(--primary);
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--primary), 0 0 5px var(--primary);
+}
