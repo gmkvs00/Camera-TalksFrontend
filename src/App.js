@@ -10,9 +10,12 @@ import RoleEditPage from './pages/roles/RoleEditPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import NewsListPage from './pages/news/NewsListPage';
 import NewsCreatePage from "./pages/news/NewsCreatePage";
+import RouteProgress from "./RouteProgress";
 
 const App = () => {
   return (
+    <>
+    <RouteProgress />
     <Routes>
       <Route path="/login" element={<LoginPage />} />
 
@@ -67,6 +70,7 @@ const App = () => {
       {/* default */}
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
+    </>
   );
 };
 

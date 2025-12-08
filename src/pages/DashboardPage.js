@@ -29,6 +29,7 @@ const DashboardPage = () => {
   const displayName = user?.name || 'Admin';
 
   return (
+    <div className="page-transition">
     <MainLayout title="Dashboard">
       <div className="dashboard">
         {/* Top Welcome + Subtext */}
@@ -110,6 +111,7 @@ const DashboardPage = () => {
         </div>
       </div>
     </MainLayout>
+    </div>
   );
 };
 
