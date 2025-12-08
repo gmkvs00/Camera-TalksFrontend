@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   FiHome,
@@ -17,13 +17,13 @@ const menuItems = [
     label: 'Dashboard',
     icon: <FiHome />,
     path: '/dashboard',
-    permission: 'mes.dashboard',
+    permission: null,
   },
   {
     label: 'News',
     icon: <FiFileText />,
     path: '/news',
-    permission: 'news.browse', 
+    permission: 'news.browse',
   },
   {
     label: 'Admin Settings',
@@ -41,7 +41,7 @@ const menuItems = [
         label: 'Roles',
         icon: <FiUsers />,
         path: '/settings/roles',
-        permission: 'role.browse', 
+        permission: 'role.browse',
       },
     ],
   },
@@ -73,7 +73,7 @@ const Sidebar = ({ isDesktop, isOpen, onClose }) => {
     });
 
     setOpenMenus((prev) => ({ ...prev, ...newOpen }));
-  }, [location.pathname]); // ✅ menuItems is static, no need in deps
+  }, [location.pathname]);
 
   const toggleMenu = (key) => {
     setOpenMenus((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -115,6 +115,7 @@ const Sidebar = ({ isDesktop, isOpen, onClose }) => {
           const visibleChildren = item.children.filter((child) =>
             hasPermission(child.permission)
           );
+
           if (!hasPermission(item.permission) || visibleChildren.length === 0) {
             return null;
           }

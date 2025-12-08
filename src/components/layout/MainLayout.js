@@ -1,10 +1,8 @@
-// src/components/layout/MainLayout.js
 import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
 import { FiMenu } from 'react-icons/fi';
 
 const MainLayout = ({ children, title }) => {
-  // is screen >= 768 ?
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
 
@@ -12,7 +10,7 @@ const MainLayout = ({ children, title }) => {
     const handleResize = () => {
       const desktop = window.innerWidth >= 768;
       setIsDesktop(desktop);
-      setIsSidebarOpen(desktop);   // on small screen -> close
+      setIsSidebarOpen(desktop);
     };
 
     window.addEventListener('resize', handleResize);
@@ -23,6 +21,8 @@ const MainLayout = ({ children, title }) => {
   const closeSidebar = () => {
     if (!isDesktop) setIsSidebarOpen(false);
   };
+
+  const currentYear = new Date().getFullYear();
 
   return (
     <div className="app-shell">
@@ -39,18 +39,38 @@ const MainLayout = ({ children, title }) => {
       )}
 
       {/* Main area */}
-      <main className="main-content">
-        <header className="main-header">
-          {/* hamburger only on small screen */}
-          {!isDesktop && (
-            <button className="icon-button" onClick={openSidebar}>
-              <FiMenu />
-            </button>
-          )}
-          <h1>{title}</h1>
+      <div className="main-wrapper">
+        {/* Top header bar */}
+        <header className="app-header">
+          <div className="app-header-left">
+            {!isDesktop && (
+              <button className="icon-button" onClick={openSidebar}>
+                <FiMenu />
+              </button>
+            )}
+            <div>
+              <h1 className="app-header-title">{title}</h1>
+              <p className="app-header-subtitle">News Admin Panel</p>
+            </div>
+          </div>
+
+          {/* Right side of header – placeholder for future (profile, search, etc.) */}
+          <div className="app-header-right">
+            <span className="app-header-badge">Admin</span>
+          </div>
         </header>
-        <section className="main-body">{children}</section>
-      </main>
+
+        {/* Page content + footer */}
+        <main className="main-content">
+          <div className="main-inner">
+            <section className="main-body">{children}</section>
+
+            <footer className="main-footer">
+              <span>© {currentYear} News Admin. All rights reserved.</span>
+            </footer>
+          </div>
+        </main>
+      </div>
     </div>
   );
 };
