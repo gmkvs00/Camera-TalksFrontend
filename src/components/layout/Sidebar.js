@@ -9,7 +9,9 @@ import {
   FiLogOut,
   FiChevronDown,
   FiChevronRight,
+  FiKey
 } from 'react-icons/fi';
+import { BiKey } from "react-icons/bi";
 import { useAuth } from '../../context/AuthContext';
 
 const menuItems = [
@@ -39,7 +41,7 @@ const menuItems = [
       },
       {
         label: 'Roles',
-        icon: <FiUsers />,
+        icon: <FiKey />,
         path: '/settings/roles',
         permission: 'role.browse',
       },
