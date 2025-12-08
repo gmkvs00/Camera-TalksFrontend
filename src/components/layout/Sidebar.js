@@ -45,25 +45,25 @@ const menuItems = [
       {
         label: 'All Articles',
         icon: <FiFileText />,
-        path: '/articles',
+        path: '/comming-soon',
         permission: 'developer.browse',
       },
       {
         label: 'Create Article',
         icon: <FiFilePlus />,
-        path: '/articles/create',
+        path: '/comming-soon',
         permission: 'developer.browse',
       },
       {
         label: 'Categories',
         icon: <FiFolder />,
-        path: '/articles/categories',
+        path: '/comming-soon',
         permission: 'developer.browse',
       },
       {
         label: 'Tags',
         icon: <FiTag />,
-        path: '/articles/tags',
+        path: '/comming-soon',
         permission: 'developer.browse',
       },
     ],
@@ -71,13 +71,13 @@ const menuItems = [
   {
     label: 'Media Library',
     icon: <FiImage />,
-    path: '/media',
+    path: '/comming-soon',
     permission: 'developer.browse',
   },
   {
     label: 'Comments',
     icon: <FiMessageSquare />,
-    path: '/comments',
+    path: '/comming-soon',
     permission: 'developer.browse',
   },
   {
@@ -89,13 +89,13 @@ const menuItems = [
       {
         label: 'All Pages',
         icon: <FiFileText />,
-        path: '/pages',
+        path: '/comming-soon',
         permission: 'developer.browse',
       },
       {
         label: 'Create Page',
         icon: <FiFilePlus />,
-        path: '/pages/create',
+        path: '/comming-soon',
         permission: 'developer.browse',
       },
     ],
@@ -103,13 +103,13 @@ const menuItems = [
   {
     label: 'Website Menu',
     icon: <FiMenu />,
-    path: '/menus',
+    path: '/comming-soon',
     permission: 'developer.browse',
   },
   {
     label: 'Reports',
     icon: <FiBarChart2 />,
-    path: '/reports',
+    path: '/comming-soon',
     permission: 'developer.browse',
   },
   {
@@ -133,13 +133,13 @@ const menuItems = [
       {
         label: 'System Settings',
         icon: <FiSliders />,
-        path: '/settings/system',
+        path: '/comming-soon',
         permission: 'role.browse',
       },
       {
         label: 'Activity Logs',
         icon: <FiClock />,
-        path: '/settings/logs',
+        path: '/comming-soon',
         permission: 'developer.browse',
       },
     ],

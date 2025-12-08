@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
-import { FiMenu } from 'react-icons/fi';
+import { FiMenu, FiBell, FiSun } from 'react-icons/fi';
+import { useAuth } from '../../context/AuthContext';
 
 const MainLayout = ({ children, title }) => {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
+
+  const { user } = useAuth(); // 👈 get current user from context
 
   useEffect(() => {
     const handleResize = () => {
@@ -23,6 +26,10 @@ const MainLayout = ({ children, title }) => {
   };
 
   const currentYear = new Date().getFullYear();
+
+  const userName = user?.name || 'User';
+  const userRole = user?.role?.name || 'Admin';
+  const userInitial = userName.charAt(0).toUpperCase();
 
   return (
     <div className="app-shell">
@@ -54,9 +61,26 @@ const MainLayout = ({ children, title }) => {
             </div>
           </div>
 
-          {/* Right side of header – placeholder for future (profile, search, etc.) */}
+          {/* Right side of header – now using real user info */}
           <div className="app-header-right">
-            <span className="app-header-badge">Admin</span>
+            <button className="header-icon-btn" type="button">
+              <FiBell />
+              <span className="header-icon-dot" />
+            </button>
+
+            <button className="header-icon-btn" type="button">
+              <FiSun />
+            </button>
+
+            <div className="header-divider" />
+
+            <div className="header-user">
+              <div className="header-user-meta">
+                <span className="header-user-name">{userName}</span>
+                <span className="header-user-role">{userRole}</span>
+              </div>
+              <div className="header-avatar">{userInitial}</div>
+            </div>
           </div>
         </header>
 

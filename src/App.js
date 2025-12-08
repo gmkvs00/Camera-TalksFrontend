@@ -10,66 +10,72 @@ import RoleEditPage from './pages/roles/RoleEditPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import NewsListPage from './pages/news/NewsListPage';
 import NewsCreatePage from "./pages/news/NewsCreatePage";
+import ComingSoonPage from "./pages/commingsoon/ComingSoonPage";
 import RouteProgress from "./RouteProgress";
 
 const App = () => {
   return (
     <>
-    <RouteProgress />
-    <Routes>
-      <Route path="/login" element={<LoginPage />} />
+      <RouteProgress />
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
 
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <DashboardPage />
-          </ProtectedRoute>
-        }
-      />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
 
-      {/* Settings -> Users */}
-      <Route
-        path="/settings/users"
-        element={
-          <ProtectedRoute>
-            <UserListPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/settings/users/create"
-        element={
-          <ProtectedRoute>
-            <UserCreatePage />
-          </ProtectedRoute>
-        }
-      />
+        {/* Settings -> Users */}
+        <Route
+          path="/settings/users"
+          element={
+            <ProtectedRoute>
+              <UserListPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings/users/create"
+          element={
+            <ProtectedRoute>
+              <UserCreatePage />
+            </ProtectedRoute>
+          }
+        />
 
-      {/* Settings -> Roles */}
-      <Route
-        path="/settings/roles"
-        element={
-          <ProtectedRoute>
-            <RoleListPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/settings/roles/create"
-        element={
-          <ProtectedRoute>
-            <RoleCreatePage />
-          </ProtectedRoute>
-        }
-      />
+        {/* Settings -> Roles */}
+        <Route
+          path="/settings/roles"
+          element={
+            <ProtectedRoute>
+              <RoleListPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings/roles/create"
+          element={
+            <ProtectedRoute>
+              <RoleCreatePage />
+            </ProtectedRoute>
+          }
+        />
         {/* news rout */}
-      <Route path="/news" element={<ProtectedRoute><NewsListPage /></ProtectedRoute>} />
-      <Route path="/news/create" element={<ProtectedRoute><NewsCreatePage /></ProtectedRoute>} />
-     <Route path="/settings/roles/edit/:id" element={<RoleEditPage />} />
-      {/* default */}
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
-    </Routes>
+        <Route path="/news" element={<ProtectedRoute><NewsListPage /></ProtectedRoute>} />
+        <Route path="/news/create" element={<ProtectedRoute><NewsCreatePage /></ProtectedRoute>} />
+        <Route path="/settings/roles/edit/:id" element={<RoleEditPage />} />
+        {/* default */}
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+
+        <Route
+          path="/comming-soon"
+          element={<ComingSoonPage title="Module Coming Soon" />}
+        />
+      </Routes>
     </>
   );
 };
