@@ -99,7 +99,6 @@ body {
   min-height: 100vh;
 }
 
-/* Sidebar (fixed) */
 
 .sidebar {
   width: 240px;
@@ -114,7 +113,11 @@ body {
   top: 0;
   left: 0;
   bottom: 0; /* full height */
+
+  /* no scroll here – scroll only inside .sidebar-menu */
+  overflow: hidden;
 }
+
 
 /* Mobile open/close state */
 
@@ -156,8 +159,21 @@ body {
 
   /* scroll only inside sidebar content */
   overflow-y: auto;
+
+  overflow-x: hidden;
   padding-right: 4px; /* avoid scrollbar over text */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
+  -ms-overflow-style: none;  
+  scrollbar-width: none;
 }
+.sidebar-menu::-webkit-scrollbar {
+  display: none;
+}
+.sidebar-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 
 .sidebar-link {
   display: flex;
@@ -201,8 +217,18 @@ body {
 .sidebar-submenu {
   margin-left: 0.75rem;
   margin-top: 0.1rem;
+   overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease-in-out;
+   cursor: pointer;
+  user-select: none;          /* prevent text selection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
-
+.sidebar-submenu.open {
+  max-height: 400px; /* enough for items, adjust if needed */
+}
 .sidebar-sublink {
   display: flex;
   align-items: center;

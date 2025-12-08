@@ -9,9 +9,18 @@ import {
   FiLogOut,
   FiChevronDown,
   FiChevronRight,
-  FiKey
+  FiKey,
+  FiGlobe,
+  FiImage,
+  FiMessageSquare,
+  FiCopy,
+  FiMenu,
+  FiTag,
+  FiFolder,
+  FiSliders,
+  FiClock,
+  FiFilePlus,
 } from 'react-icons/fi';
-import { BiKey } from "react-icons/bi";
 import { useAuth } from '../../context/AuthContext';
 
 const menuItems = [
@@ -23,9 +32,85 @@ const menuItems = [
   },
   {
     label: 'News',
-    icon: <FiFileText />,
+    icon: <FiGlobe />,
     path: '/news',
     permission: 'news.browse',
+  },
+  {
+    label: 'Articles',
+    icon: <FiFileText />,
+    key: 'articles',
+    permission: 'developer.browse',
+    children: [
+      {
+        label: 'All Articles',
+        icon: <FiFileText />,
+        path: '/articles',
+        permission: 'developer.browse',
+      },
+      {
+        label: 'Create Article',
+        icon: <FiFilePlus />,
+        path: '/articles/create',
+        permission: 'developer.browse',
+      },
+      {
+        label: 'Categories',
+        icon: <FiFolder />,
+        path: '/articles/categories',
+        permission: 'developer.browse',
+      },
+      {
+        label: 'Tags',
+        icon: <FiTag />,
+        path: '/articles/tags',
+        permission: 'developer.browse',
+      },
+    ],
+  },
+  {
+    label: 'Media Library',
+    icon: <FiImage />,
+    path: '/media',
+    permission: 'developer.browse',
+  },
+  {
+    label: 'Comments',
+    icon: <FiMessageSquare />,
+    path: '/comments',
+    permission: 'developer.browse',
+  },
+  {
+    label: 'Pages',
+    icon: <FiCopy />,
+    key: 'pages',
+    permission: 'developer.browse',
+    children: [
+      {
+        label: 'All Pages',
+        icon: <FiFileText />,
+        path: '/pages',
+        permission: 'developer.browse',
+      },
+      {
+        label: 'Create Page',
+        icon: <FiFilePlus />,
+        path: '/pages/create',
+        permission: 'developer.browse',
+      },
+    ],
+  },
+  {
+    label: 'Website Menu',
+    icon: <FiMenu />,
+    path: '/menus',
+    permission: 'developer.browse',
+  },
+  {
+    label: 'Reports',
+    icon: <FiBarChart2 />,
+    path: '/reports',
+    permission: 'developer.browse',
   },
   {
     label: 'Admin Settings',
@@ -40,18 +125,24 @@ const menuItems = [
         permission: 'user.browse',
       },
       {
-        label: 'Roles',
+        label: 'Roles & Permissions',
         icon: <FiKey />,
         path: '/settings/roles',
         permission: 'role.browse',
       },
+      {
+        label: 'System Settings',
+        icon: <FiSliders />,
+        path: '/settings/system',
+        permission: 'role.browse',
+      },
+      {
+        label: 'Activity Logs',
+        icon: <FiClock />,
+        path: '/settings/logs',
+        permission: 'developer.browse',
+      },
     ],
-  },
-  {
-    label: 'Reports',
-    icon: <FiBarChart2 />,
-    path: '/reports',
-    permission: 'report.browse',
   },
 ];
 
@@ -60,20 +151,24 @@ const Sidebar = ({ isDesktop, isOpen, onClose }) => {
   const [openMenus, setOpenMenus] = useState({});
   const location = useLocation();
 
+  // Prevent text selection (option 2 fix)
+  const handleMouseDown = (e) => {
+    const tag = e.target.tagName.toLowerCase();
+    if (tag !== 'input' && tag !== 'textarea') {
+      e.preventDefault();
+    }
+  };
+
   useEffect(() => {
     const newOpen = {};
-
     menuItems.forEach((item) => {
       if (item.children) {
         const hasActiveChild = item.children.some((child) =>
           location.pathname.startsWith(child.path)
         );
-        if (hasActiveChild) {
-          newOpen[item.key] = true;
-        }
+        if (hasActiveChild && item.key) newOpen[item.key] = true;
       }
     });
-
     setOpenMenus((prev) => ({ ...prev, ...newOpen }));
   }, [location.pathname]);
 
@@ -82,24 +177,24 @@ const Sidebar = ({ isDesktop, isOpen, onClose }) => {
   };
 
   const sidebarClass =
-    'sidebar ' +
-    (!isDesktop ? (isOpen ? 'sidebar-open' : 'sidebar-hidden') : '');
+    'sidebar ' + (!isDesktop ? (isOpen ? 'sidebar-open' : 'sidebar-hidden') : '');
 
   return (
-    <aside className={sidebarClass} onClick={(e) => e.stopPropagation()}>
+    <aside
+      className={sidebarClass}
+      onClick={(e) => e.stopPropagation()}
+      onMouseDown={handleMouseDown}
+    >
       <div className="sidebar-header">
-  <div className="logo-box">N</div>
-  <div className="logo-text-wrap">
-    <span className="logo-text">News Admin</span>
-    <span className="logo-username">
-      {user?.name ? user.name : 'User'}
-    </span>
-  </div>
-</div>
+        <div className="logo-box">N</div>
+        <div className="logo-text-wrap">
+          <span className="logo-text">News Admin</span>
+          <span className="logo-username">{user?.name || 'User'}</span>
+        </div>
+      </div>
 
       <nav className="sidebar-menu">
         {menuItems.map((item) => {
-          // simple single link
           if (!item.children) {
             if (!hasPermission(item.permission)) return null;
 
@@ -118,27 +213,20 @@ const Sidebar = ({ isDesktop, isOpen, onClose }) => {
             );
           }
 
-          // with submenu
           const visibleChildren = item.children.filter((child) =>
             hasPermission(child.permission)
           );
-
-          if (!hasPermission(item.permission) || visibleChildren.length === 0) {
-            return null;
-          }
+          if (visibleChildren.length === 0) return null;
 
           const isOpenMenu = openMenus[item.key];
           const childActive = visibleChildren.some((child) =>
             location.pathname.startsWith(child.path)
           );
 
-          const parentClasses =
-            'sidebar-link sidebar-parent' + (childActive ? ' active' : '');
-
           return (
             <div key={item.key} className="sidebar-group">
               <div
-                className={parentClasses}
+                className={'sidebar-link sidebar-parent' + (childActive ? ' active' : '')}
                 onClick={() => toggleMenu(item.key)}
               >
                 <span className="icon">{item.icon}</span>
@@ -149,7 +237,7 @@ const Sidebar = ({ isDesktop, isOpen, onClose }) => {
               </div>
 
               {isOpenMenu && (
-                <div className="sidebar-submenu">
+                <div className="sidebar-submenu open">
                   {visibleChildren.map((child) => (
                     <NavLink
                       key={child.path}
@@ -172,9 +260,7 @@ const Sidebar = ({ isDesktop, isOpen, onClose }) => {
 
       <div className="sidebar-footer">
         <div className="user-info">
-          <div className="avatar">
-            {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
-          </div>
+          <div className="avatar">{user?.name ? user.name[0].toUpperCase() : 'U'}</div>
           <div>
             <div className="user-name">{user?.name}</div>
             <div className="user-role">{user?.role?.name}</div>
