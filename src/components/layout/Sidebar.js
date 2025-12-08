@@ -86,9 +86,14 @@ const Sidebar = ({ isDesktop, isOpen, onClose }) => {
   return (
     <aside className={sidebarClass} onClick={(e) => e.stopPropagation()}>
       <div className="sidebar-header">
-        <div className="logo-box">N</div>
-        <span className="logo-text">News Admin</span>
-      </div>
+  <div className="logo-box">N</div>
+  <div className="logo-text-wrap">
+    <span className="logo-text">News Admin</span>
+    <span className="logo-username">
+      {user?.name ? user.name : 'User'}
+    </span>
+  </div>
+</div>
 
       <nav className="sidebar-menu">
         {menuItems.map((item) => {
