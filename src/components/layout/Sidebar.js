@@ -1,3 +1,4 @@
+// src/components/layout/Sidebar.jsx
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -22,6 +23,9 @@ import {
   FiFilePlus,
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
+
+// 🔹 Add your logo here (update path if needed)
+import ChaimicLogo from '../../assets/logo.png';
 
 const menuItems = [
   {
@@ -151,7 +155,7 @@ const Sidebar = ({ isDesktop, isOpen, onClose }) => {
   const [openMenus, setOpenMenus] = useState({});
   const location = useLocation();
 
-  // Prevent text selection (option 2 fix)
+  // Prevent text selection
   const handleMouseDown = (e) => {
     const tag = e.target.tagName.toLowerCase();
     if (tag !== 'input' && tag !== 'textarea') {
@@ -185,10 +189,13 @@ const Sidebar = ({ isDesktop, isOpen, onClose }) => {
       onClick={(e) => e.stopPropagation()}
       onMouseDown={handleMouseDown}
     >
+      {/* 🔸 CHAIMIC TALKS logo header */}
       <div className="sidebar-header">
-        <div className="logo-box">N</div>
+        <div className="logo-box">
+          <img src={ChaimicLogo} alt="CHAIMIC TALKS" className="logo-img" />
+        </div>
         <div className="logo-text-wrap">
-          <span className="logo-text">News Admin</span>
+          <span className="logo-text">CHAIMIC TALKS</span>
           <span className="logo-username">{user?.name || 'User'}</span>
         </div>
       </div>
@@ -226,7 +233,9 @@ const Sidebar = ({ isDesktop, isOpen, onClose }) => {
           return (
             <div key={item.key} className="sidebar-group">
               <div
-                className={'sidebar-link sidebar-parent' + (childActive ? ' active' : '')}
+                className={
+                  'sidebar-link sidebar-parent' + (childActive ? ' active' : '')
+                }
                 onClick={() => toggleMenu(item.key)}
               >
                 <span className="icon">{item.icon}</span>
@@ -260,7 +269,9 @@ const Sidebar = ({ isDesktop, isOpen, onClose }) => {
 
       <div className="sidebar-footer">
         <div className="user-info">
-          <div className="avatar">{user?.name ? user.name[0].toUpperCase() : 'U'}</div>
+          <div className="avatar">
+            {user?.name ? user.name[0].toUpperCase() : 'U'}
+          </div>
           <div>
             <div className="user-name">{user?.name}</div>
             <div className="user-role">{user?.role?.name}</div>
